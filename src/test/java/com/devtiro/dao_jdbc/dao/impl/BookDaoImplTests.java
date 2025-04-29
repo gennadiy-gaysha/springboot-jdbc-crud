@@ -1,9 +1,9 @@
-package com.devtiro.dao_jdbc.dao;
+package com.devtiro.dao_jdbc.dao.impl;
 
-import com.devtiro.dao_jdbc.dao.impl.BookDaoImpl;
 import com.devtiro.dao_jdbc.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,7 +22,7 @@ public class BookDaoImplTests {
     BookDaoImpl underTest;
 
     @Test
-    public void testThatCreateBookGeneratesCorrectSql(){
+    public void testThatCreateBookGeneratesCorrectSql() {
         Book book = Book.builder()
                 .isbn("1234-56-7890")
                 .title("The Shadow in the Attic")
@@ -35,6 +35,15 @@ public class BookDaoImplTests {
                 eq("INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)"),
                 eq("1234-56-7890"), eq("The Shadow in the Attic"), eq(1L)
         );
+    }
 
+    @Test
+    public void testThatFindOneGeneratesTheCorrectSql() {
+        underTest.findOne("1234-56-7890");
+        verify(jdbcTemplate).query(
+                eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
+                eq("1234-56-7890")
+        );
     }
 }

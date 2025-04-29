@@ -96,3 +96,5 @@ public class StudentDao {
 | Benefit | **Separation of concerns** = clean architecture! |
 
 ---
+### Metods' naming mapping:
+`App -> create() [DAO] -> update() [JdbcTemplate] -> INSERT [Database]`
