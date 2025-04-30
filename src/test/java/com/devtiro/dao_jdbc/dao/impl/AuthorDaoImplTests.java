@@ -1,5 +1,6 @@
 package com.devtiro.dao_jdbc.dao.impl;
 
+import com.devtiro.dao_jdbc.TestDataUtil;
 import com.devtiro.dao_jdbc.domain.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,15 +41,9 @@ public class AuthorDaoImplTests {
     private AuthorDaoImpl underTest;
 
     @Test
-    public void testThatCreateAuthorGeneratesCorrectSql(){
+    public void testThatCreateAuthorGeneratesCorrectSql() {
         // Author.builder() creates a builder object (not an Author yet)
-        Author author = Author.builder()
-                // these are builder methods, not normal setters
-                .id(1L)
-                .name("Abigail Rose")
-                .age(80)
-                // creates the actual Author object with those values
-                .build();
+        Author author = TestDataUtil.createTestAuthor();
 
         underTest.create(author);
 
@@ -64,7 +59,7 @@ public class AuthorDaoImplTests {
     // This test verifies that the findOne() method in AuthorDaoImpl
     // calls jdbcTemplate.query(...) with the correct SQL and parameters
     @Test
-    public void testThatFindOneGeneratesTheCorrectSql(){
+    public void testThatFindOneGeneratesTheCorrectSql() {
         underTest.findOne(1L);
 
         verify(jdbcTemplate).query(

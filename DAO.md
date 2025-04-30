@@ -98,3 +98,12 @@ public class StudentDao {
 ---
 ### Metods' naming mapping:
 `App -> create() [DAO] -> update() [JdbcTemplate] -> INSERT [Database]`
+
+## Unit vs. Integration test
+
+| Aspect       | Unit Test           | Integration Test                 |
+|--------------|---------------------|----------------------------------|
+| Scope        | Single method/class | Multiple modules/components      |
+| Speed        | Very fast           | Slower                           |
+| Dependencies | Mocked              | Real or semi-real (e.g. H2 DB)   |
+| Purpose      | Test internal logic | Test system behavior & data flow |

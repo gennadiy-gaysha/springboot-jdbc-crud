@@ -1,5 +1,6 @@
 package com.devtiro.dao_jdbc.dao.impl;
 
+import com.devtiro.dao_jdbc.TestDataUtil;
 import com.devtiro.dao_jdbc.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,11 +24,7 @@ public class BookDaoImplTests {
 
     @Test
     public void testThatCreateBookGeneratesCorrectSql() {
-        Book book = Book.builder()
-                .isbn("1234-56-7890")
-                .title("The Shadow in the Attic")
-                .authorId(1L)
-                .build();
+        Book book = TestDataUtil.createTestBook();
 
         underTest.create(book);
 
