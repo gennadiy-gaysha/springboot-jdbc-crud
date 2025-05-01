@@ -60,7 +60,10 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void update(Long id, Author authorA) {
         jdbcTemplate.update(
-                "UPDATE authors WHERE id = ?, name = ?, age = ?",
+                // Go to the authors table and update the row where the id
+                // is equal to ? (the last one). In that row, set the id, name, and age
+                // to the new values given.
+                "UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
                 authorA.getId(), authorA.getName(), authorA.getAge(), id
         );
     }

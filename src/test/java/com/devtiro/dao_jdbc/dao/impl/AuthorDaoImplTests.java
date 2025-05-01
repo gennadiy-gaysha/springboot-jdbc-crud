@@ -90,7 +90,7 @@ public class AuthorDaoImplTests {
         underTest.update(3L, authorA);
 
         verify(jdbcTemplate).update(
-                "UPDATE authors WHERE id = ?, name = ?, age = ?",
+                "UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
                 1L, "Abigail Rose", 80, 3L
         );
     }

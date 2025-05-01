@@ -59,7 +59,7 @@ public class BookDaoImplTests {
         underTest.update("1234-56-7890-XXX", bookA);
 
         verify(jdbcTemplate).update(
-                "UPDATE books SET isbn = ?, title = ? author_id = ?, WHERE isbn = ?",
+                "UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?",
                 "1234-56-78901", "The Shadow in the Attic", 1L, "1234-56-7890-XXX"
         );
     }
