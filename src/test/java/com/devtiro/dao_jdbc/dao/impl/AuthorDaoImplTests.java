@@ -59,7 +59,7 @@ public class AuthorDaoImplTests {
     // This test verifies that the findOne() method in AuthorDaoImpl
     // calls jdbcTemplate.query(...) with the correct SQL and parameters
     @Test
-    public void testThatFindOneGeneratesTheCorrectSql() {
+    public void testThatFindAuthorGeneratesTheCorrectSql() {
         underTest.findOne(1L);
 
         verify(jdbcTemplate).query(
@@ -75,12 +75,23 @@ public class AuthorDaoImplTests {
     }
 
     @Test
-    public void testThatFindManyGeneratesTheCorrectSql() {
+    public void testThatFindManyAuthorsGeneratesCorrectSql() {
         underTest.findAll();
 
         verify(jdbcTemplate).query(
                 eq("SELECT id, name, age FROM authors"),
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+        );
+    }
+
+    @Test
+    public void testThatUpdateAuthorGeneratesCorrectSql(){
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.update(3L, authorA);
+
+        verify(jdbcTemplate).update(
+                "UPDATE authors WHERE id = ?, name = ?, age = ?",
+                1L, "Abigail Rose", 80, 3L
         );
     }
 }

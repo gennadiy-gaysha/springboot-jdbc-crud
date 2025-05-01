@@ -35,7 +35,7 @@ public class BookDaoImplTests {
     }
 
     @Test
-    public void testThatFindOneGeneratesTheCorrectSql() {
+    public void testThatFindBookGeneratesCorrectSql() {
         underTest.findOne("1234-56-78901");
         verify(jdbcTemplate).query(
                 eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
@@ -45,11 +45,22 @@ public class BookDaoImplTests {
     }
 
     @Test
-    public void testThatFindManyGeneratesTheCorrectSql(){
+    public void testThatFindManyBooksGeneratesCorrectSql(){
         underTest.findAll();
         verify(jdbcTemplate).query(
                 eq("SELECT isbn, title, author_id FROM books"),
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+        );
+    }
+
+    @Test
+    public void testThatUpdateBookGeneratesCorrectSql(){
+        Book bookA = TestDataUtil.createTestBookA();
+        underTest.update("1234-56-7890-XXX", bookA);
+
+        verify(jdbcTemplate).update(
+                "UPDATE books SET isbn = ?, title = ? author_id = ?, WHERE isbn = ?",
+                "1234-56-78901", "The Shadow in the Attic", 1L, "1234-56-7890-XXX"
         );
     }
 }
