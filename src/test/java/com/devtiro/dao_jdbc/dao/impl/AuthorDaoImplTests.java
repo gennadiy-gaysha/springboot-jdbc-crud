@@ -43,7 +43,7 @@ public class AuthorDaoImplTests {
     @Test
     public void testThatCreateAuthorGeneratesCorrectSql() {
         // Author.builder() creates a builder object (not an Author yet)
-        Author author = TestDataUtil.createTestAuthor();
+        Author author = TestDataUtil.createTestAuthorA();
 
         underTest.create(author);
 
@@ -71,6 +71,16 @@ public class AuthorDaoImplTests {
                 ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
                 // The third argument was the long value 1L
                 eq(1L)
+        );
+    }
+
+    @Test
+    public void testThatFindManyGeneratesTheCorrectSql() {
+        underTest.findAll();
+
+        verify(jdbcTemplate).query(
+                eq("SELECT id, name, age FROM authors"),
+                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
         );
     }
 }
