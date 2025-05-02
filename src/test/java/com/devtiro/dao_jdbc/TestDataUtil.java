@@ -34,11 +34,15 @@ public final class TestDataUtil {
                 .build();
     }
 
+    // Setting authorId = null avoids hardcoding an ID that may not match the one
+    // generated in the test. It gives full control to inject a valid foreign key
+    // (from an actual created Author)
+
     public static Book createTestBookA() {
         return Book.builder()
                 .isbn("1234-56-78901")
                 .title("The Shadow in the Attic")
-                .authorId(1L)
+                .authorId(null)
                 .build();
     }
 
@@ -46,7 +50,7 @@ public final class TestDataUtil {
         return Book.builder()
                 .isbn("1234-56-78902")
                 .title("The Puttermesser Papers")
-                .authorId(2L)
+                .authorId(null)
                 .build();
     }
 
@@ -54,7 +58,7 @@ public final class TestDataUtil {
         return Book.builder()
                 .isbn("1234-56-78903")
                 .title("The Dream House")
-                .authorId(3L)
+                .authorId(null)
                 .build();
     }
 

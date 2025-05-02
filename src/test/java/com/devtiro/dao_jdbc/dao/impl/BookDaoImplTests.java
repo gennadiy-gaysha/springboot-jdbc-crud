@@ -1,6 +1,7 @@
 package com.devtiro.dao_jdbc.dao.impl;
 
 import com.devtiro.dao_jdbc.TestDataUtil;
+import com.devtiro.dao_jdbc.domain.Author;
 import com.devtiro.dao_jdbc.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +25,10 @@ public class BookDaoImplTests {
 
     @Test
     public void testThatCreateBookGeneratesCorrectSql() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+
         Book book = TestDataUtil.createTestBookA();
+        book.setAuthorId(authorA.getId()); // Assign the correct foreign key
 
         underTest.create(book);
 
@@ -55,7 +59,11 @@ public class BookDaoImplTests {
 
     @Test
     public void testThatUpdateBookGeneratesCorrectSql(){
+        Author authorA = TestDataUtil.createTestAuthorA();
+
         Book bookA = TestDataUtil.createTestBookA();
+        bookA.setAuthorId(authorA.getId()); // Assign the correct foreign key
+
         underTest.update("1234-56-7890-XXX", bookA);
 
         verify(jdbcTemplate).update(
@@ -72,6 +80,5 @@ public class BookDaoImplTests {
                 "DELETE FROM books WHERE isbn = ?",
                 "1234-56-78901"
         );
-
     }
 }
